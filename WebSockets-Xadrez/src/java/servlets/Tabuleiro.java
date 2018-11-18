@@ -15,8 +15,21 @@ public class Tabuleiro {
         {0, 0, 0, 0, 0, 0, 0, 0},
         {1, 1, 1, 1, 1, 1, 1, 1},
         {1, 1, 1, 1, 1, 1, 1, 1},};
+//    PEÇAS BRANCAS
     public static int BRANCA = 1;
-    public static int PRETA = 2;
+    public static int TORRE_BRANCA = 2;
+    public static int CAVALO_BRANCA = 3;
+    public static int BISPO_BRANCA = 4;
+    public static int REI_BRANCA = 5;
+    public static int RAINHA_BRANCA =6 ;
+//    PEÇAS PRETAS
+    public static int PRETA = 7;
+    public static int TORRE_PRETA = 8;
+    public static int CAVALO_PRETA = 9;
+    public static int BISPO_PRETA = 10;
+    public static int REI_PRETA = 11;
+    public static int RAINHA_PRETA = 12;
+    public static int _PRETA = ;
 
     public int getTurn() {
         return turn;
