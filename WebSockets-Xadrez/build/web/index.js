@@ -44,7 +44,21 @@ function montarTabela(tabuleiro) {
     tabuleiro.forEach(function (row, rowIndex) {
         row.forEach(function (col, colIndex) {
             var cell = table.rows[rowIndex].cells[colIndex];
-            cell.innerHTML = (col === 0 ? "" : (col === 1 ? '<img src="imagens/Peao-Branco.svg" alt="">' : '<img src="imagens/Peao-Preto.svg" alt="">'));
+            cell.innerHTML = 
+                    (col === 0 ? "" : 
+                        (col === 1 ? '<img src="imagens/Peao-Branco.svg" alt="">' :
+                            (col === 2 ? '<img src="imagens/Torre-Branca.svg" alt="">':
+                                (col === 3 ? '<img src="imagens/Cavalo-Branco.svg" alt="">':
+                                    (col === 4 ? '<img src="imagens/Bispo-Branco.svg" alt="">':
+                                        (col === 5 ? '<img src="imagens/Rei-Branco.svg" alt="">':
+                                            (col === 6 ? '<img src="imagens/Rainha-Branca.svg" alt="">':
+                                                (col === 7 ? '<img src="imagens/Peao-Preto.svg" alt="">':
+                                                    (col === 8 ? '<img src="imagens/Torre-Preta.svg" alt="">':
+                                                        (col === 9 ? '<img src="imagens/Cavalo-Preto.svg" alt="">':
+                                                            (col === 10 ? '<img src="imagens/Bispo-Preto.svg" alt="">':
+                                                                (col === 11 ? '<img src="imagens/Rei-Preto.svg" alt="">':
+                                                                    (col === 12 ? '<img src="imagens/Rainha-Preta.svg" alt="">' :"")))))))))))));
+//                    '<img src="imagens/Peao-Preto.svg" alt="">'));;;
             var x = cell.firstChild;
             if (x) {
                 x.draggable = true;

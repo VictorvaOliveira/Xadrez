@@ -7,14 +7,14 @@ public class Tabuleiro {
 
     private int turn = 0;
     private int[][] tabuleiro = {
-        {2, 2, 2, 2, 2, 2, 2, 2},
-        {2, 2, 2, 2, 2, 2, 2, 2},
+        {8, 9, 10, 12, 11, 10, 9, 8},
+        {7, 7, 7, 7, 7, 7, 7, 7},
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
         {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1},};
+        {2, 3, 4, 5, 6, 4, 3, 2},};
 //    PEÇAS BRANCAS
     public static int BRANCA = 1;
     public static int TORRE_BRANCA = 2;
@@ -29,7 +29,6 @@ public class Tabuleiro {
     public static int BISPO_PRETA = 10;
     public static int REI_PRETA = 11;
     public static int RAINHA_PRETA = 12;
-    public static int _PRETA = ;
 
     public int getTurn() {
         return turn;
@@ -75,7 +74,7 @@ public class Tabuleiro {
             return false;
         }
         boolean ok = false;
-        /* Jogada normal */
+        /* Jogada peão */
         if ((pecaEhBranca(or, oc) && or == dr + 1 && (oc == dc + 0|| oc == dc - 0)) || (!pecaEhBranca(or, oc) && or == dr - 1 && (oc == dc - 0 || oc == dc + 0))) {
             tabuleiro[dr][dc] = tabuleiro[or][oc];
             tabuleiro[or][oc] = 0;
