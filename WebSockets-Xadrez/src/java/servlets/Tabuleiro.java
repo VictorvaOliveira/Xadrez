@@ -21,7 +21,7 @@ public class Tabuleiro {
     public static int CAVALO_BRANCA = 3;
     public static int BISPO_BRANCA = 4;
     public static int REI_BRANCA = 5;
-    public static int RAINHA_BRANCA =6 ;
+    public static int RAINHA_BRANCA = 6;
 //    PEÇAS PRETAS
     public static int PRETA = 7;
     public static int TORRE_PRETA = 8;
@@ -36,6 +36,26 @@ public class Tabuleiro {
 
     private boolean pecaEhBranca(int x, int y) {
         return tabuleiro[x][y] == BRANCA;
+    }
+
+    private boolean pecaEhTorreBranca(int x, int y) {
+        return tabuleiro[x][y] == TORRE_BRANCA;
+    }
+
+    private boolean pecaEhBispoBranco(int x, int y) {
+        return tabuleiro[x][y] == BISPO_BRANCA;
+    }
+
+    private boolean pecaEhCavaloBranco(int x, int y) {
+        return tabuleiro[x][y] == CAVALO_BRANCA;
+    }
+
+    private boolean pecaEhReiBranco(int x, int y) {
+        return tabuleiro[x][y] == REI_BRANCA;
+    }
+
+    private boolean pecaEhRainhaBranco(int x, int y) {
+        return tabuleiro[x][y] == RAINHA_BRANCA;
     }
 
     public int qtdDePecas(int peca) {
@@ -57,6 +77,21 @@ public class Tabuleiro {
         if ((player == PRETA && (pecaEhBranca(or, oc) || turn == 0)) || (player == BRANCA && (!pecaEhBranca(or, oc) || turn == 1))) {
             return false;
         }
+
+        if (pecaEhBranca(or, oc)) {
+            System.out.println("Peão branco");
+        } else if (!pecaEhBranca(or, oc)) {
+            System.out.println("Peão Preto");
+        } else if (pecaEhCavaloBranco(or, oc)) {
+            System.out.println("Cavalo branco");
+            moverCavalo(player, or, oc, dr, dc);
+        } else if (!pecaEhCavaloBranco(or, oc)) {
+            System.out.println("Cavalo preto");
+            moverCavalo(player, or, oc, dr, dc);
+        }
+//        else if(pecaEhBispoBranco(or, oc)){
+//            System.out.println("Bispo branco");
+//        }
         /* Origem e destino devem ser diferentes */
         if (or == dr && oc == dc) {
             return false;
@@ -69,41 +104,81 @@ public class Tabuleiro {
         if (tabuleiro[or][oc] == 0) {
             return false;
         }
-        /* Destino deve estar vazio */
-        if (tabuleiro[dr][dc] != 0) {
-            return false;
-        }
+
         boolean ok = false;
-        /* Jogada peão */
-        if ((pecaEhBranca(or, oc) && or == dr + 1 && (oc == dc + 0|| oc == dc - 0)) || (!pecaEhBranca(or, oc) && or == dr - 1 && (oc == dc - 0 || oc == dc + 0))) {
+//        /* Jogada peão */
+        if ((pecaEhBranca(or, oc) && or == dr + 1 && (oc == dc + 0 || oc == dc - 0)) || (!pecaEhBranca(or, oc) && or == dr - 1 && (oc == dc - 0 || oc == dc + 0))) {
             tabuleiro[dr][dc] = tabuleiro[or][oc];
             tabuleiro[or][oc] = 0;
             ok = true;
         }
-//        Se for a peça for Torre
-/**
- *      if((torreBranca(or, oc) && or == dr + 7 && (oc == dc + 0 || oc == dc - 0)) || (!torreBranca(or, oc) && or = dr - 7 && (oc == dc - 0 || oc == dc + 0))){
- *          tabuleiro[dr][dc] = tabuleiro[or][oc];
- *          tabuleiro[or][oc] = 0;
- *          ok = true;
- *      }
- */
-        /* Capturar pedra adversaria */
-        if ((or == dr + 2 && (oc == dc - 0 || oc == dc + 0)) || (or == dr - 2 && (oc == dc - 0 || oc == dc + 0))) {
-            int ar = (or + dr) / 2;
-            int ac = (oc + dc) / 2;
-            boolean corPeca = pecaEhBranca(or, oc);
-            boolean corOutra = pecaEhBranca(ar, ac);
-            if ((corPeca && !corOutra) || (!corPeca && corOutra)) {
+//        if ((tabuleiro[or + 1][oc + 1] != 0 && tabuleiro[or + 1][or - 1] != 0) || (tabuleiro[or - 1][oc + 1] != 0 && tabuleiro[or - 1][or - 1] != 0)) {
+        if (tabuleiro[dr][dc] != 0) {
+            if ((pecaEhBranca(or, oc) && or == dr + 1 && (oc == dc + 1 || oc == dc - 1)) || (!pecaEhBranca(or, oc) && or == dr - 1 && (oc == dc - 1 || oc == dc + 1))) {
                 tabuleiro[dr][dc] = tabuleiro[or][oc];
-                tabuleiro[ar][ac] = 0;
                 tabuleiro[or][oc] = 0;
                 ok = true;
             }
         }
+//        /* Capturar com peão peça branca adversaria */
+        if (dr == or + 1 && (dc == oc - 1 || dc == oc + 1) && tabuleiro[dr][dc] != 0 && tabuleiro[dr][dc] < 6) {
+            boolean corPeca = pecaEhBranca(or, oc);
+            boolean corOutra = pecaEhBranca(dr, dc);
+            if ((corPeca && !corOutra) || (!corPeca && corOutra)) {
+                tabuleiro[dr][dc] = tabuleiro[or][oc];
+                tabuleiro[or][oc] = 0;
+                ok = true;
+            }
+        }
+//        /* Capturar com peão peça preta adversaria */
+        if (dr == or + 1 && (dc == oc - 1 || dc == oc + 1) && tabuleiro[dr][dc] != 0 && tabuleiro[dr][dc] < 7) {
+            boolean corPeca = pecaEhBranca(or, oc);
+            boolean corOutra = pecaEhBranca(dr, dc);
+            if ((corPeca && !corOutra) || (!corPeca && corOutra)) {
+                tabuleiro[dr][dc] = tabuleiro[or][oc];
+                tabuleiro[or][oc] = 0;
+                ok = true;
+            }
+        }
+
         if (ok) {
             turn = (turn + 1) % 2;
         }
+        return ok;
+    }
+
+    public boolean moverCavalo(int player, int or, int oc, int dr, int dc) {
+        /* É a sua vez de jogar? */
+        if ((player == PRETA && (pecaEhBranca(or, oc) || turn == 0)) || (player == BRANCA && (!pecaEhBranca(or, oc) || turn == 1))) {
+            return false;
+        }
+        /* Origem e destino devem ser diferentes */
+        if (or == dr && oc == dc) {
+            return false;
+        }
+        /* Origem e destino estão no tabuleiro */
+        if ((or < 0 || or >= 8) || (oc < 0 || oc >= 8) || (dr < 0 || dr >= 8) || (dc < 0 || dc >= 8)) {
+            return false;
+        }
+        /* Origem possui uma peça? */
+        if (tabuleiro[or][oc] == 0) {
+            return false;
+        }
+
+        boolean ok = false;
+
+        if ((pecaEhCavaloBranco(or, oc) && or == dr + 3 && (oc == dc + 0 || oc == dc - 0)) || (!pecaEhCavaloBranco(or, oc) && or == dr - 3 && (oc == dc - 0 || oc == dc + 0))) {
+            tabuleiro[dr][dc] = tabuleiro[or][oc];
+            tabuleiro[or][oc] = 0;
+            ok = true;
+        }
+
+        if ((pecaEhCavaloBranco(or, oc) && or == dr + 0 && (oc == dc + 3 || oc == dc - 3)) || (!pecaEhCavaloBranco(or, oc) && or == dr - 0 && (oc == dc - 3 || oc == dc + 3))) {
+            tabuleiro[dr][dc] = tabuleiro[or][oc];
+            tabuleiro[or][oc] = 0;
+            ok = true;
+        }
+
         return ok;
     }
 
